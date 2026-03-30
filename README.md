@@ -24,7 +24,133 @@
 - [ ] Git 설정 + GitHub 연동
 
 ## 4. 터미널 조작 로그
-(작업하면서 채워나가기)
+
+// 현재 위치 확인
+sparrow95769576@c4r7s5 cdsy-E1-1 % pwd
+/Users/sparrow95769576/cdsy-E1-1
+
+
+// 목록 확인(숨김 파일 포함)
+sparrow95769576@c4r7s5 cdsy-E1-1 % ls -la
+total 8
+drwxr-xr-x   4 sparrow95769576  sparrow95769576   128  3 30 17:54 .
+drwxr-x---+ 21 sparrow95769576  sparrow95769576   672  3 30 17:54 ..
+drwxr-xr-x  13 sparrow95769576  sparrow95769576   416  3 30 17:54 .git
+-rw-r--r--   1 sparrow95769576  sparrow95769576  3718  3 30 17:54 README.md
+
+
+// 폴더 생성
+sparrow95769576@c4r7s5 cdsy-E1-1 % mkdir terminal-practice
+
+
+// 이동
+sparrow95769576@c4r7s5 cdsy-E1-1 % cd terminal-practice
+
+// 이동 확인
+sparrow95769576@c4r7s5 terminal-practice % pwd
+/Users/sparrow95769576/cdsy-E1-1/terminal-practice
+
+
+// 빈 파일 생성
+sparrow95769576@c4r7s5 terminal-practice % touch hello.txt
+sparrow95769576@c4r7s5 terminal-practice % touch bye.txt
+
+// 파일 생성 확인
+sparrow95769576@c4r7s5 terminal-practice % ls -la
+total 0
+drwxr-xr-x  4 sparrow95769576  sparrow95769576  128  3 30 18:02 .
+drwxr-xr-x  5 sparrow95769576  sparrow95769576  160  3 30 18:01 ..
+-rw-r--r--  1 sparrow95769576  sparrow95769576    0  3 30 18:02 bye.txt
+-rw-r--r--  1 sparrow95769576  sparrow95769576    0  3 30 18:01 hello.txt
+
+
+// 파일 내용 변경
+sparrow95769576@c4r7s5 terminal-practice % echo "Hello Codyssey" > hello.txt                    
+
+
+// 파일 내용 확인
+sparrow95769576@c4r7s5 terminal-practice % cat hello.txt 
+Hello Codyssey
+
+
+
+// 복사
+sparrow95769576@c4r7s5 terminal-practice % cp hello.txt hello-copy.txt
+
+
+
+// 이름 변경 전
+sparrow95769576@c4r7s5 terminal-practice % ls -la
+total 16
+drwxr-xr-x  5 sparrow95769576  sparrow95769576  160  3 30 18:05 .
+drwxr-xr-x  5 sparrow95769576  sparrow95769576  160  3 30 18:01 ..
+-rw-r--r--  1 sparrow95769576  sparrow95769576    0  3 30 18:02 bye.txt
+-rw-r--r--  1 sparrow95769576  sparrow95769576   15  3 30 18:05 hello-copy.txt
+-rw-r--r--  1 sparrow95769576  sparrow95769576   15  3 30 18:05 hello.txt
+
+// 이름 변경
+sparrow95769576@c4r7s5 terminal-practice % mv bye.txt byebye.txt
+
+// 이름 변경 후
+sparrow95769576@c4r7s5 terminal-practice % ls -la
+total 16
+drwxr-xr-x  5 sparrow95769576  sparrow95769576  160  3 30 18:05 .
+drwxr-xr-x  5 sparrow95769576  sparrow95769576  160  3 30 18:01 ..
+-rw-r--r--  1 sparrow95769576  sparrow95769576    0  3 30 18:02 byebye.txt
+-rw-r--r--  1 sparrow95769576  sparrow95769576   15  3 30 18:05 hello-copy.txt
+-rw-r--r--  1 sparrow95769576  sparrow95769576   15  3 30 18:05 hello.txt
+
+
+// 폴더 생성
+sparrow95769576@c4r7s5 terminal-practice % mkdir new_folder
+
+// 이동 전
+sparrow95769576@c4r7s5 terminal-practice % ls -la
+total 16
+drwxr-xr-x  6 sparrow95769576  sparrow95769576  192  3 30 18:07 .
+drwxr-xr-x  5 sparrow95769576  sparrow95769576  160  3 30 18:01 ..
+-rw-r--r--  1 sparrow95769576  sparrow95769576    0  3 30 18:02 byebye.txt
+-rw-r--r--  1 sparrow95769576  sparrow95769576   15  3 30 18:05 hello-copy.txt
+-rw-r--r--  1 sparrow95769576  sparrow95769576   15  3 30 18:05 hello.txt
+drwxr-xr-x  2 sparrow95769576  sparrow95769576   64  3 30 18:07 new_folder
+
+// 이동
+sparrow95769576@c4r7s5 terminal-practice % mv hello-copy.txt new_folder 
+
+// 이동 후
+sparrow95769576@c4r7s5 terminal-practice % ls -la
+total 8
+drwxr-xr-x  5 sparrow95769576  sparrow95769576  160  3 30 18:07 .
+drwxr-xr-x  5 sparrow95769576  sparrow95769576  160  3 30 18:01 ..
+-rw-r--r--  1 sparrow95769576  sparrow95769576    0  3 30 18:02 byebye.txt
+-rw-r--r--  1 sparrow95769576  sparrow95769576   15  3 30 18:05 hello.txt
+drwxr-xr-x  3 sparrow95769576  sparrow95769576   96  3 30 18:07 new_folder
+
+
+sparrow95769576@c4r7s5 terminal-practice % cd new_folder 
+
+
+sparrow95769576@c4r7s5 new_folder % ls -la
+total 8
+drwxr-xr-x  3 sparrow95769576  sparrow95769576   96  3 30 18:07 .
+drwxr-xr-x  5 sparrow95769576  sparrow95769576  160  3 30 18:07 ..
+-rw-r--r--  1 sparrow95769576  sparrow95769576   15  3 30 18:05 hello-copy.txt
+
+sparrow95769576@c4r7s5 new_folder % cd ..
+
+// 파일 삭제
+sparrow95769576@c4r7s5 terminal-practice % rm byebye.txt 
+
+// 폴더 삭제
+sparrow95769576@c4r7s5 terminal-practice % rm -r new_folder 
+
+// 삭제 확인
+sparrow95769576@c4r7s5 terminal-practice % ls -la
+total 8
+drwxr-xr-x  3 sparrow95769576  sparrow95769576   96  3 30 18:08 .
+drwxr-xr-x  5 sparrow95769576  sparrow95769576  160  3 30 18:01 ..
+-rw-r--r--  1 sparrow95769576  sparrow95769576   15  3 30 18:05 hello.txt
+
 
 ## 5. 권한 실습
 
