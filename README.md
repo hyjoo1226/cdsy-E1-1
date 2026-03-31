@@ -572,7 +572,7 @@ sparrow95769576@c4r7s7 cdsy-E1-1 % docker ps
 CONTAINER ID   IMAGE     COMMAND   CREATED         STATUS         PORTS     NAMES
 5b23e90b56bb   ubuntu    "bash"    5 seconds ago   Up 5 seconds             ubuntu-exec
 
-// exec: 실행 중인 컨테이너에 새로운 프로세스/쉘 실행
+// exec: 실행 중인 컨테이너에 새로운 프로세스 실행
 sparrow95769576@c4r7s7 cdsy-E1-1 % docker exec -it ubuntu-exec bash
 
 root@5b23e90b56bb:/# exit   
@@ -582,7 +582,7 @@ sparrow95769576@c4r7s7 cdsy-E1-1 % docker ps
 CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS          PORTS     NAMES
 5b23e90b56bb   ubuntu    "bash"    54 seconds ago   Up 54 seconds             ubuntu-exec
 ```
--> 컨테이너에서 새로 실행한 상태이므로 컨테이너가 살아있음
+-> 컨테이너에서 새로 실행한 상태이므로 exit하더라도 컨테이너가 살아있음
 
 
 ## 8. 포트 매핑
