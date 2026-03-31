@@ -563,7 +563,7 @@ root@130521e01b1c:/# ls
 bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
 
 root@130521e01b1c:/# echo "Hello"
-Hellols!
+Hello
 
 root@1e831827e2c5:/# exit
 exit
