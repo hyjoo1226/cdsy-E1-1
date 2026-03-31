@@ -17,10 +17,10 @@
 - [v] 파일 권한 실습
 - [v] Docker 설치/점검
 - [v] hello-world 실행
-- [ ] Dockerfile 빌드/실행
-- [ ] 포트 매핑 접속
+- [v] Dockerfile 빌드/실행
+- [v] 포트 매핑 접속
 - [ ] 바인드 마운트
-- [ ] 볼륨 영속성
+- [v] 볼륨 영속성
 - [ ] Git 설정 + GitHub 연동
 
 ## 4. 터미널 조작 로그
@@ -588,6 +588,60 @@ CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS          PORTS     NA
 ## 8. 포트 매핑
 
 ## 9. 볼륨 영속성
+
+```
+// 볼륨 생성
+sparrow95769576@c4r7s7 cdsy-E1-1 % docker volume create my-db-storage
+my-db-storage
+
+// 볼륨 목록 확인
+sparrow95769576@c4r7s7 cdsy-E1-1 % docker volume ls
+DRIVER    VOLUME NAME
+local     my-db-storage
+
+// 볼륨의 상세 정보 확인
+sparrow95769576@c4r7s7 cdsy-E1-1 % docker volume inspect my-db-storage
+[
+    {
+        "CreatedAt": "2026-03-31T15:52:25+09:00",
+        "Driver": "local",
+        "Labels": null,
+        "Mountpoint": "/var/lib/docker/volumes/my-db-storage/_data",
+        "Name": "my-db-storage",
+        "Options": null,
+        "Scope": "local"
+    }
+]
+```
+
+```
+// 볼륨을 /app/data 경로에 마운트하여 컨테이너 실행
+// sleep infinity 옵션: 컨테이너가 종료되지 않도록 유지시켜주는 옵션
+sparrow95769576@c4r7s7 cdsy-E1-1 % docker run -d --name worker-v1 -v my-db-storage:/app/data ubuntu sleep infinity
+08a173b533096d8ff159d9e7d703383c954b68b26297baf5154231639010634b
+
+// 컨테이너 내부에 데이터 파일 생성
+sparrow95769576@c4r7s7 cdsy-E1-1 % docker exec -it worker-v1 bash -c "echo 'Persistence Test: Success' > /app/data/result.txt"
+
+// 생성된 파일 내용 확인
+sparrow95769576@c4r7s7 cdsy-E1-1 % docker exec -it worker-v1 cat /app/data/result.txt
+Persistence Test: Success
+
+// 컨테이너 삭제
+sparrow95769576@c4r7s7 cdsy-E1-1 % docker rm -f worker-v1
+worker-v1
+
+sparrow95769576@c4r7s7 cdsy-E1-1 % docker ps -a | grep worker-v1
+
+// 동일한 볼륨을 새 컨테이너에 연결
+sparrow95769576@c4r7s7 cdsy-E1-1 % docker run -d --name worker-v2 -v my-db-storage:/app/data ubuntu sleep infinity
+02f08b585b24b7cc589edb1d27213f85933b895c5462d27a231e5688eeffa0c1
+
+// 이전 컨테이너에 생성했던 파일이 존재하는지 확인
+sparrow95769576@c4r7s7 cdsy-E1-1 % docker exec -it worker-v2 cat /app/data/result.txt
+Persistence Test: Success
+```
+
 
 ## 10. 트러블슈팅
 ### 문제 1: Git 인증 실패
