@@ -17,8 +17,8 @@
 - [v] 파일 권한 실습
 - [v] Docker 설치/점검
 - [v] hello-world 실행
-- [ ] Dockerfile 빌드/실행
-- [ ] 포트 매핑 접속
+- [v] Dockerfile 빌드/실행
+- [v] 포트 매핑 접속
 - [ ] 바인드 마운트
 - [ ] 볼륨 영속성
 - [ ] Git 설정 + GitHub 연동
@@ -584,8 +584,100 @@ CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS          PORTS     NA
 ```
 -> 컨테이너에서 새로 실행한 상태이므로 exit하더라도 컨테이너가 살아있음
 
+## 9. Docker 기반 커스텀 이미지 제작
+```
+// 새 디렉토리 생성
+sparrow95769576@c4r7s7 cdsy-E1-1 % mkdir custom-nginx
+sparrow95769576@c4r7s7 cdsy-E1-1 % cd custom-nginx 
 
-## 8. 포트 매핑
+// NGINX 웹 서버에서 제공할 HTML 파일을 담을 'html' 디렉토리 생성
+sparrow95769576@c4r7s7 custom-nginx % mkdir html
+
+// index.html 파일 생성 및 간단한 HTML 내용 작성
+sparrow95769576@c4r7s7 custom-nginx % echo "<h1>Hello, Codyssey\!</h1><p>Custom NGINX Image Success.</p>" > html/index.html
+sparrow95769576@c4r7s7 custom-nginx % ls
+html
+```
+
+```
+// Dockerfile 작성
+sparrow95769576@c4r7s7 custom-nginx % vi Dockerfile
+
+# 1. 베이스 이미지 선택 (경량화된 alpine 버전 사용)
+FROM nginx:alpine
+
+# 2. 커스텀 포인트: 관리용 메타데이터 추가
+LABEL maintainer="hyjoo1226"
+LABEL description="My Custom Web Server for Mission"
+
+# 3. 커스텀 포인트: 환경 변수 설정
+ENV APP_ENV=Development
+
+# 4. 커스텀 포인트: 호스트의 html 파일을 컨테이너 내부의 NGINX 기본 경로로 복사
+COPY html/ /usr/share/nginx/html/
+
+# 5. 포트 노출 (문서화 용도)
+EXPOSE 80
+```
+
+```
+// Docker 이미지 빌드(-t 옵션으로 이미지 이름과 태그 지정)
+sparrow95769576@c4r7s7 custom-nginx % docker build -t my-custom-web:1.0 .
+
+[+] Building 7.9s (7/7) FINISHED                                                                                 docker:orbstack
+ => [internal] load build definition from Dockerfile                                                                        0.2s
+ => => transferring dockerfile: 530B                                                                                        0.0s
+ => [internal] load metadata for docker.io/library/nginx:alpine                                                             2.8s
+ => [internal] load .dockerignore                                                                                           0.1s
+ => => transferring context: 2B                                                                                             0.0s
+ => [internal] load build context                                                                                           0.2s
+ => => transferring context: 130B                                                                                           0.0s
+ => [1/2] FROM docker.io/library/nginx:alpine@sha256:e7257f1ef28ba17cf7c248cb8ccf6f0c6e0228ab9c315c152f9c203cd34cf6d1       4.0s
+ => => resolve docker.io/library/nginx:alpine@sha256:e7257f1ef28ba17cf7c248cb8ccf6f0c6e0228ab9c315c152f9c203cd34cf6d1       0.2s
+ => => sha256:d5030d429039a823bef4164df2fad7a0defb8d00c98c1136aec06701871197c2 12.32kB / 12.32kB                            0.0s
+ => => sha256:589002ba0eaed121a1dbf42f6648f29e5be55d5c8a6ee0f8eaa0285cc21ac153 3.86MB / 3.86MB                              0.5s
+ => => sha256:e7257f1ef28ba17cf7c248cb8ccf6f0c6e0228ab9c315c152f9c203cd34cf6d1 10.33kB / 10.33kB                            0.0s
+ => => sha256:7e89aa6cabfc80f566b1b77b981f4bb98413bd2d513ca9a30f63fe58b4af6903 2.50kB / 2.50kB                              0.0s
+ => => sha256:8892f80f46a05d59a4cde3bcbb1dd26ed2441d4214870a4a7b318eaa476a0a54 1.87MB / 1.87MB                              0.9s
+ => => sha256:91d1c9c22f2c631288354fadb2decc448ce151d7a197c167b206588e09dcd50a 626B / 626B                                  0.8s
+ => => extracting sha256:589002ba0eaed121a1dbf42f6648f29e5be55d5c8a6ee0f8eaa0285cc21ac153                                   0.1s
+ => => sha256:cf1159c696ee2a72b85634360dbada071db61bceaad253db7fda65c45a58414c 953B / 953B                                  1.1s
+ => => sha256:3f4ad4352d4f91018e2b4910b9db24c08e70192c3b75d0d6fff0120c838aa0bb 402B / 402B                                  1.3s
+ => => extracting sha256:8892f80f46a05d59a4cde3bcbb1dd26ed2441d4214870a4a7b318eaa476a0a54                                   0.1s
+ => => sha256:c2bd5ab177271dd59f19a46c214b1327f5c428cd075437ec0155ae71d0cdadc1 1.21kB / 1.21kB                              1.4s
+ => => sha256:4d9d41f3822d171ccc5f2cdfd75ad846ac4c7ed1cd36fb998fe2c0ce4501647b 1.40kB / 1.40kB                              1.6s
+ => => extracting sha256:91d1c9c22f2c631288354fadb2decc448ce151d7a197c167b206588e09dcd50a                                   0.0s
+ => => extracting sha256:cf1159c696ee2a72b85634360dbada071db61bceaad253db7fda65c45a58414c                                   0.0s
+ => => sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 20.25MB / 20.25MB                            2.5s
+ => => extracting sha256:3f4ad4352d4f91018e2b4910b9db24c08e70192c3b75d0d6fff0120c838aa0bb                                   0.0s
+ => => extracting sha256:c2bd5ab177271dd59f19a46c214b1327f5c428cd075437ec0155ae71d0cdadc1                                   0.0s
+ => => extracting sha256:4d9d41f3822d171ccc5f2cdfd75ad846ac4c7ed1cd36fb998fe2c0ce4501647b                                   0.0s
+ => => extracting sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08                                   0.4s
+ => [2/2] COPY html/ /usr/share/nginx/html/                                                                                 0.2s
+ => exporting to image                                                                                                      0.2s
+ => => exporting layers                                                                                                     0.1s
+ => => writing image sha256:a002f7a5ec97341d4a925186d78b74f0fdf2f5726ecfaca5afc7b0411f2e4eb0                                0.0s
+ => => naming to docker.io/library/my-custom-web:1.0                                                                        0.0s
+
+// 현재 Docker 이미지 확인
+sparrow95769576@c4r7s7 custom-nginx % docker images | grep my-custom-web
+my-custom-web   1.0       a002f7a5ec97   11 seconds ago   62.2MB
+
+// 컨테이너 실행
+// 호스트 8080포트를 컨테이너 80포트에 매핑
+sparrow95769576@c4r7s7 custom-nginx % docker run -d -p 8080:80 --name my-web-container my-custom-web:1.0
+b2826d5688ab50d02ad5928a02e9fd3964102a1e6a24756ffe3cd094591b698c
+
+sparrow95769576@c4r7s7 custom-nginx % docker ps
+CONTAINER ID   IMAGE               COMMAND                   CREATED          STATUS          PORTS                                     NAMES
+b2826d5688ab   my-custom-web:1.0   "/docker-entrypoint.…"   8 seconds ago    Up 7 seconds    0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   my-web-container
+```
+
+
+## 10. 포트 매핑
+<img width="1215" height="1312" alt="스크린샷 2026-03-31 오후 3 28 30" src="https://github.com/user-attachments/assets/bac1a41f-0442-49a3-a839-3b6fa0dd6fc3" />
+
+
 
 ## 9. 볼륨 영속성
 
