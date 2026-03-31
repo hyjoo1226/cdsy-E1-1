@@ -7,10 +7,10 @@
 재현 가능한 개발 워크스테이션 환경을 구축하는 것을 목표로 합니다.
 
 ## 2. 실행 환경
-- OS: 
-- Shell: 
+- OS: macOS 15.7.4
+- Shell: /bin/zsh
 - Docker: 28.5.2
-- Git: 
+- Git: 2.53.0
 
 ## 3. 수행 체크리스트
 - [v] 터미널 기본 조작
@@ -19,14 +19,9 @@
 - [v] hello-world 실행
 - [v] Dockerfile 빌드/실행
 - [v] 포트 매핑 접속
-<<<<<<< HEAD
 - [v] 바인드 마운트
 - [v] 볼륨 영속성
-=======
-- [ ] 바인드 마운트
-- [ ] 볼륨 영속성
->>>>>>> ced766918262fea755a317b8f86c2a2756874909
-- [ ] Git 설정 + GitHub 연동
+- [v] Git 설정 + GitHub 연동
 
 ## 4. 터미널 조작 로그
 
@@ -762,8 +757,31 @@ sparrow95769576@c4r7s7 cdsy-E1-1 % docker exec -it worker-v2 cat /app/data/resul
 Persistence Test: Success
 ```
 
+## 13. Git 설정 및 Github 연동
 
-## 10. 트러블슈팅
+```
+sparrow95769576@c4r7s7 cdsy-E1-1 % git config --list
+
+credential.helper=osxkeychain
+user.name=hyjoo1226
+user.email=sparrow9576@gmail.com
+core.repositoryformatversion=0
+core.filemode=true
+core.bare=false
+core.logallrefupdates=true
+core.ignorecase=true
+core.precomposeunicode=true
+remote.origin.url=https://github.com/hyjoo1226/cdsy-E1-1.git
+remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+branch.master.remote=origin
+branch.master.merge=refs/heads/master
+pull.rebase=false
+```
+<img width="451" height="43" alt="스크린샷 2026-03-31 오후 4 58 18" src="https://github.com/user-attachments/assets/9d19f30a-64e5-46de-b013-3616c73ccd20" />
+
+
+
+## 14. 트러블슈팅
 ### 문제 1: Git 인증 실패
 
 [문제]
