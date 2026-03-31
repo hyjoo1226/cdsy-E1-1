@@ -5,12 +5,17 @@
 **터미널(CLI), Docker(컨테이너), Git/GitHub(버전 관리)** 를
 직접 설치하고 운영하는 경험을 통해
 재현 가능한 개발 워크스테이션 환경을 구축하는 것을 목표로 합니다.
-
+<br>
+<br>
+<br>
 ## 2. 실행 환경
 - OS: macOS 15.7.4
 - Shell: /bin/zsh
 - Docker: 28.5.2
 - Git: 2.53.0
+<br>
+<br>
+
 
 ## 3. 수행 체크리스트
 - [v] 터미널 기본 조작
@@ -22,10 +27,12 @@
 - [v] 바인드 마운트
 - [v] 볼륨 영속성
 - [v] Git 설정 + GitHub 연동
+<br>
+<br>
 
 ## 4. 터미널 조작 로그
 
-터미널 조작 명령어
+[터미널 조작 명령어]
 - pwd: 현재 경로 출력
 - ls: 디렉토리 목록 보기
 - ls -la: 숨김 파일을 포함해 디렉토리 목록 보기
@@ -37,8 +44,12 @@
 - cp: 파일 복사
 - mv: 파일 이동, 파일 이름 변경
 - rm: 파일 삭제
-cp, rm의 경우 폴더 단위로 할 경우 -r 옵션 필요
 
+cp, rm의 경우 폴더 단위로 할 경우 -r 옵션 필요
+<br>
+<br>
+
+[실습]
 ```
 // 현재 위치 확인
 sparrow95769576@c4r7s5 cdsy-E1-1 % pwd
@@ -173,6 +184,8 @@ drwxr-xr-x  3 sparrow95769576  sparrow95769576   96  3 30 18:08 .
 drwxr-xr-x  5 sparrow95769576  sparrow95769576  160  3 30 18:01 ..
 -rw-r--r--  1 sparrow95769576  sparrow95769576   15  3 30 18:05 hello.txt
 ```
+<br>
+<br>
 
 ## 5. 권한 실습
 
@@ -184,12 +197,14 @@ drwxr-xr-x  5 sparrow95769576  sparrow95769576  160  3 30 18:01 ..
 └──────────────── 파일 종류 (- 파일 / d 폴더)
 ```
 
-권한 종류
+[권한 종류]
 - r(read): 파일 읽기 / 폴더 내 파일 목록 보기
 - w(write): 파일 쓰기 / 폴더 내 파일 생성/삭제/이름 변경
 - x(execute): 파일 실행 / 폴더 들어가기
 
-숫자 표기법
+<br>
+
+[숫자 표기법]
 - 7: rwx(4+2+1)
 - 6: rw-(4+2)
 - 5: r-x(4+1)
@@ -201,8 +216,10 @@ drwxr-xr-x  5 sparrow95769576  sparrow95769576  160  3 30 18:01 ..
 
 ex) chmod 755 = 소유자(rwx) 그룹(r-x) 다른 사용자(r-x)
 
+<br>
 
-파일 권한
+[실습 - 파일 권한]
+
 ```
 // 스크립트는 없지만 권한 중 실행이 있으므로 .sh 파일로 생성
 sparrow95769576@c4r7s7 permission-practice % touch test.sh
@@ -246,7 +263,9 @@ drwxr-xr-x  6 sparrow95769576  sparrow95769576  192  3 31 11:59 ..
 sparrow95769576@c4r7s7 permission-practice % cat test.sh 
 ```
 
-폴더 권한
+<br>
+[실습 - 폴더 권한]
+
 ```
 sparrow95769576@c4r7s7 permission-practice % mkdir test-dir
 sparrow95769576@c4r7s7 permission-practice % ls -la
@@ -291,17 +310,20 @@ sparrow95769576@c4r7s7 permission-practice % chmod 755 test-dir
 sparrow95769576@c4r7s7 permission-practice % ls test-dir 
 ```
 
-
+<br>
+<br>
 
 ## 6. Docker 설치/점검
 
 ```
+// 버전 정보
 sparrow95769576@c4r7s7 cdsy-E1-1 % docker --version
 
 Docker version 28.5.2, build ecc6942
 ```
 
 ```
+// 상세 정보
 sparrow95769576@c4r7s7 cdsy-E1-1 % docker info
 
 Client:
@@ -402,8 +424,11 @@ Server:
 WARNING: DOCKER_INSECURE_NO_IPTABLES_RAW is set
 ```
 warning은 Docker가 네트워크 방화벽 규칙 일부를 사용하지 않았다는 의미
+<br>
 -> 현재 OrbStack이 자체 네트워크 방식을 쓰기 때문에 생긴 것으로, 정상 동작에 영향 없음
 
+<br>
+<br>
 
 ## 7. Docker 기본 운영 명령
 
@@ -440,6 +465,9 @@ For more examples and ideas, visit:
 ```
 hello-world 명령어:  이미지 다운로드(없으면) -> 컨테이너 생성 -> 프로그램  실행 -> 종료
 
+<br>
+
+
 ```
 // 이미지 목록 확인
 sparrow95769576@c4r7s7 cdsy-E1-1 % docker images
@@ -452,6 +480,8 @@ hello-world   latest    e2ac70e7319a   7 days ago   10.1kB
 - 컨테이너: 이미지 기반으로 실제 실행되는 독립적인 프로세스
 
 어떤 이미지가 있는지 확인하는 것을 통해 새 이미지 다운로드 여부 판단, 오래되거나 사용하지 않는 이미지 판단 가능
+
+<br>
 
 
 ```
@@ -467,6 +497,8 @@ CONTAINER ID   IMAGE         COMMAND    CREATED          STATUS                 
 3a4e3890a7c8   hello-world   "/hello"   17 seconds ago   Exited (0) 17 seconds ago             exciting_margulis
 ```
 hello-world 명령어를 사용했으므로 ps -a 명령어를 입력했을 때만 나타나는 모습
+
+<br>
 
 ```
 // 로그 확인
@@ -507,6 +539,9 @@ CONTAINER ID   NAME                CPU %     MEM USAGE / LIMIT   MEM %     NET I
 ```
 현재는 실행된 컨테이너가 없는 모습
 
+<br>
+<br>
+
 ## 8. 컨테이너 실행 실습
 
 ```
@@ -534,6 +569,8 @@ root@1e831827e2c5:/# exit
 exit
 ```
 
+<br>
+
 ```
 // -d(백그라운드 실행) 옵션으로 컨테이너 실행
 sparrow95769576@c4r7s7 cdsy-E1-1 % docker run -it -d --name ubuntu-bg ubuntu bash
@@ -552,6 +589,8 @@ bd9deb02a8a3   ubuntu        "bash"     51 seconds ago      Up 51 seconds       
 -> 기존 실행 방법은 컨테이너가 터미널과 붙어있을 때만 살아있고 exit하면 종료
 -> -d 옵션을 사용하면 터미널과 분리해 백그라운드로 실행되므로, 터미널을 종료하더라도 컨테이너가 살아있음
 
+<br>
+
 ```
 // attach: 이미 실행 중인 컨테이너의 메인 프로세스에 연결
 sparrow95769576@c4r7s7 cdsy-E1-1 % docker attach ubuntu-bg
@@ -563,6 +602,8 @@ sparrow95769576@c4r7s7 cdsy-E1-1 % docker ps
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 ```
 -> 분리된 컨테이너를 다시 붙인 상태이므로 exit를 하면 컨테이너가 종료됨
+
+<br>
 
 ```
 sparrow95769576@c4r7s7 cdsy-E1-1 % docker run -it -d --name ubuntu-exec ubuntu bash
@@ -584,6 +625,9 @@ CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS          PORTS     NA
 ```
 -> 컨테이너에서 새로 실행한 상태이므로 exit하더라도 컨테이너가 살아있음
 
+<br>
+<br>
+
 ## 9. Docker 기반 커스텀 이미지 제작
 ```
 // 새 디렉토리 생성
@@ -598,6 +642,8 @@ sparrow95769576@c4r7s7 custom-nginx % echo "<h1>Hello, Codyssey\!</h1><p>Custom 
 sparrow95769576@c4r7s7 custom-nginx % ls
 html
 ```
+
+<br>
 
 ```
 // Dockerfile 작성
@@ -619,6 +665,8 @@ COPY html/ /usr/share/nginx/html/
 # 5. 포트 노출 (문서화 용도)
 EXPOSE 80
 ```
+
+<br>
 
 ```
 // Docker 이미지 빌드(-t 옵션으로 이미지 이름과 태그 지정)
@@ -673,11 +721,16 @@ CONTAINER ID   IMAGE               COMMAND                   CREATED          ST
 b2826d5688ab   my-custom-web:1.0   "/docker-entrypoint.…"   8 seconds ago    Up 7 seconds    0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   my-web-container
 ```
 
+<br>
+<br>
 
 ## 10. 포트 매핑
 <img width="1215" height="1312" alt="스크린샷 2026-03-31 오후 3 28 30" src="https://github.com/user-attachments/assets/bac1a41f-0442-49a3-a839-3b6fa0dd6fc3" />
 
-
+<br>
+<br>
+<br>
+<br>
 
 ## 11. 바인드 마운트 반영
 
@@ -701,6 +754,10 @@ sparrow95769576@c4r7s7 custom-nginx % echo "<h1>Bind Mount Success\!</h1><p>Modi
 ```
 <img width="1316" height="1312" alt="스크린샷 2026-03-31 오후 4 15 50" src="https://github.com/user-attachments/assets/7519663d-6e21-437c-b567-589b395fd93e" />
 
+<br>
+<br>
+<br>
+<br>
 
 ## 12. 볼륨 영속성
 
@@ -757,6 +814,9 @@ sparrow95769576@c4r7s7 cdsy-E1-1 % docker exec -it worker-v2 cat /app/data/resul
 Persistence Test: Success
 ```
 
+<br>
+<br>
+
 ## 13. Git 설정 및 Github 연동
 
 ```
@@ -777,11 +837,19 @@ branch.master.remote=origin
 branch.master.merge=refs/heads/master
 pull.rebase=false
 ```
+
+<br>
+
 <img width="451" height="43" alt="스크린샷 2026-03-31 오후 4 58 18" src="https://github.com/user-attachments/assets/9d19f30a-64e5-46de-b013-3616c73ccd20" />
+
+<br>
+<br>
+
 <img src="https://github.com/user-attachments/assets/ea7ea8f5-2fa6-4470-93a8-c59d8d817ba1" />
 
-
-
+<br>
+<br>
+<br>
 
 ## 14. 트러블슈팅
 ### 문제 1: Git 인증 실패
@@ -796,28 +864,35 @@ git push origin master
 ```
 git push 시도 시 HTTPS 인증 실패
 
+<br>
+
 [원인 가설]
 
 권한이 주어지지 않아 push에 실패
+<br>
 GitHub는 이제 HTTPS 비밀번호 인증을 지원하지 않아 PAT 또는 SSH 사용 필요
+
+<br>
 
 [확인]
 
 코디세이는 공용 컴퓨터 여러 개를 계속 이동하는 환경이므로 PAT 방식 사용
+<br>
 이러한 환경에서는 매번 SSH 키 생성 및 등록이 번거로움
 
-PAT
+1. PAT
 - Github 비밀번호 대신 사용하는 임시 비밀번호로, HTTPS 방식에서 인증을 대체
 - 동작 원리: Github 서버가 토큰을 검증 -> 권한에 따라 접근 허용
 - 계정에 종속되므로 따로 저장만 해두면 어디서든 사용하기 편함
 - 토큰 유출 위험, 만료 관리 필요
 
-SSH
+2. SSH
 - 로컬 PC에 있는 개인 키와 Github에 등록된 공개 키를 이용한 인증
 - 동작 원리: SSH 키 쌍 생성(비밀키, 공개키) -> 공개키를 Github 계정에 저장 -> Github 서버가 등록된 공개 키로 Challenge(도전 값, 랜덤 메세지) 전달 -> 로컬 PC에서는 비밀 키로 Challenge를 암호화(서명) -> 서명 검증
 - SSH는 로컬 환경(~/.ssh)에 키가 저장되기 때문에 환경이 유지되는 개인 PC에서 효율적
 - 보안성 높으나 공용 환경에선 부적합
 
+<br>
 
 [해결]
 
@@ -834,6 +909,8 @@ Username: hyjoo1226
 Password: [PAT 입력]
 ```
 
+<br>
+<br>
 
 ### 문제 2: Git 동기화 불일치
 
@@ -851,12 +928,16 @@ hint: the same ref. If you want to integrate the remote changes, use
 hint: 'git pull' before pushing again.
 hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 ```
+git push 실패
+
+<br>
 
 [원인 가설]
 
-Github 원격 저장소에서 README를 수정 후 로컬에서 pull받지 않고 작업
-그 결과 로컬에는 없는 새로운 커밋이 존재해 히스토리가 꼬임
+Github 원격 저장소에 로컬에 없는 커밋이 있는 상태에서 pull받지 않고 작업
+그 결과 로컬과 원격 간 커밋 이력이 어긋나면서 히스토리가 분기됨
 
+<br>
 
 [확인]
 
@@ -882,6 +963,8 @@ sparrow95769576@c4r7s7 cdsy-E1-1 % git log --graph --oneline --all
 * c9b10c5 Initial commit
 ```
 -> 브랜치 갈래가 나뉘어있었음
+
+<br>
 
 [해결]
 
