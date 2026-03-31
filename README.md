@@ -684,7 +684,7 @@ b2826d5688ab   my-custom-web:1.0   "/docker-entrypoint.…"   8 seconds ago    U
 
 
 
-## 9. 바인드 마운트 반영
+## 11. 바인드 마운트 반영
 
 ```
 // 마운트 옵션 추가를 위해 기존 컨테이너 종료
@@ -704,8 +704,10 @@ b54384811dda2d36f9681f9e2f08946bf9f9bef9f920ca537212d2e8db466a76
 // 파일 수정
 sparrow95769576@c4r7s7 custom-nginx % echo "<h1>Bind Mount Success\!</h1><p>Modified on Host.</p>" > html/index.html
 ```
+<img width="1316" height="1312" alt="스크린샷 2026-03-31 오후 4 15 50" src="https://github.com/user-attachments/assets/7519663d-6e21-437c-b567-589b395fd93e" />
 
-## 10. 볼륨 영속성
+
+## 12. 볼륨 영속성
 
 ```
 // 볼륨 생성
