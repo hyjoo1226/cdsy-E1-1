@@ -529,8 +529,60 @@ bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  s
 
 root@130521e01b1c:/# echo "Hello"
 Hellols!
+
+root@1e831827e2c5:/# exit
+exit
 ```
 
+```
+// -d(백그라운드 실행) 옵션으로 컨테이너 실행
+sparrow95769576@c4r7s7 cdsy-E1-1 % docker run -it -d --name ubuntu-bg ubuntu bash
+bd9deb02a8a3b08430d68c48df165c05195a538c4a55a66b1bc56232bed7ad44
+
+sparrow95769576@c4r7s7 cdsy-E1-1 % docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS          PORTS     NAMES
+bd9deb02a8a3   ubuntu    "bash"    36 seconds ago   Up 36 seconds             ubuntu-bg
+
+sparrow95769576@c4r7s7 cdsy-E1-1 % docker ps -a
+CONTAINER ID   IMAGE         COMMAND    CREATED             STATUS                          PORTS     NAMES
+bd9deb02a8a3   ubuntu        "bash"     51 seconds ago      Up 51 seconds                             ubuntu-bg
+1e831827e2c5   ubuntu        "bash"     6 minutes ago       Exited (0) About a minute ago             ubuntu-practice
+3a4e3890a7c8   hello-world   "/hello"   About an hour ago   Exited (0) About an hour ago              exciting_margulis
+```
+-> 기존 실행 방법은 컨테이너가 터미널과 붙어있을 때만 살아있고 exit하면 종료
+-> -d 옵션을 사용하면 터미널과 분리해 백그라운드로 실행되므로, 터미널을 종료하더라도 컨테이너가 살아있음
+
+```
+// attach: 이미 실행 중인 컨테이너의 메인 프로세스에 연결
+sparrow95769576@c4r7s7 cdsy-E1-1 % docker attach ubuntu-bg
+
+root@bd9deb02a8a3:/# exit
+exit
+
+sparrow95769576@c4r7s7 cdsy-E1-1 % docker ps              
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+```
+-> 분리된 컨테이너를 다시 붙인 상태이므로 exit를 하면 컨테이너가 종료됨
+
+```
+sparrow95769576@c4r7s7 cdsy-E1-1 % docker run -it -d --name ubuntu-exec ubuntu bash
+5b23e90b56bb0f400e397d2d06dc8aa8c355ae81524aa65ae27992d2d3427c85
+
+sparrow95769576@c4r7s7 cdsy-E1-1 % docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED         STATUS         PORTS     NAMES
+5b23e90b56bb   ubuntu    "bash"    5 seconds ago   Up 5 seconds             ubuntu-exec
+
+// exec: 실행 중인 컨테이너에 새로운 프로세스/쉘 실행
+sparrow95769576@c4r7s7 cdsy-E1-1 % docker exec -it ubuntu-exec bash
+
+root@5b23e90b56bb:/# exit   
+exit
+
+sparrow95769576@c4r7s7 cdsy-E1-1 % docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS          PORTS     NAMES
+5b23e90b56bb   ubuntu    "bash"    54 seconds ago   Up 54 seconds             ubuntu-exec
+```
+-> 컨테이너에서 새로 실행한 상태이므로 컨테이너가 살아있음
 
 
 ## 8. 포트 매핑
