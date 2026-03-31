@@ -25,6 +25,20 @@
 
 ## 4. 터미널 조작 로그
 
+터미널 조작 명령어
+- pwd: 현재 경로 출력
+- ls: 디렉토리 목록 보기
+- ls -la: 숨김 파일을 포함해 디렉토리 목록 보기
+- cd: 디렉토리 이동
+- touch: 새로운 파일 생성
+- cat: 파일 내용 출력
+- echo: 터미널에 입력 내용 출력, 입력 내용 파일에 저장
+- mkdir: 새로운 디렉토리 생성
+- cp: 파일 복사
+- mv: 파일 이동, 파일 이름 변경
+- rm: 파일 삭제
+cp, rm의 경우 폴더 단위로 할 경우 -r 옵션 필요
+
 ```
 // 현재 위치 확인
 sparrow95769576@c4r7s5 cdsy-E1-1 % pwd
@@ -161,6 +175,123 @@ drwxr-xr-x  5 sparrow95769576  sparrow95769576  160  3 30 18:01 ..
 ```
 
 ## 5. 권한 실습
+
+```
+-  rwx  r--  r--
+│   │    │    └── others (다른 사용자)
+│   │    └─────── group (그룹)
+│   └──────────── user (소유자)
+└──────────────── 파일 종류 (- 파일 / d 폴더)
+```
+
+권한 종류
+- r(read): 파일 읽기 / 폴더 내 목록 보기
+- w(write): 쓰기 / 폴더 내 파일 생성/삭제
+- x(execute): 파일 실행 / 폴더 진입
+
+숫자 표기법
+- 7: rwx(4+2+1)
+- 6: rw-(4+2)
+- 5: r-x(4+1)
+- 4: r--(4)
+- 3: -wx(2+1)
+- 2: -w-(2)
+- 1: --x(1)
+- 0: ---
+
+ex) chmod 755 = 소유자(rwx) 그룹(r-x) 다른 사용자(r-x)
+
+
+파일 권한
+```
+// 스크립트는 없지만 권한 중 실행이 있으므로 .sh 파일로 생성
+sparrow95769576@c4r7s7 permission-practice % touch test.sh
+sparrow95769576@c4r7s7 permission-practice % ls -la test.sh 
+-rw-r--r--  1 sparrow95769576  sparrow95769576  0  3 31 12:03 test.sh
+
+// 권한 추가(사용자에게 실행 권한)
+sparrow95769576@c4r7s7 permission-practice % chmod u+x test.sh 
+sparrow95769576@c4r7s7 permission-practice % ls -la test.sh 
+-rwxr--r--  1 sparrow95769576  sparrow95769576  0  3 31 12:03 test.sh
+
+// 숫자로 권한 변경
+sparrow95769576@c4r7s7 permission-practice % chmod 755 test.sh 
+sparrow95769576@c4r7s7 permission-practice % ls -la         
+total 0
+drwxr-xr-x  3 sparrow95769576  sparrow95769576   96  3 31 12:03 .
+drwxr-xr-x  6 sparrow95769576  sparrow95769576  192  3 31 11:59 ..
+-rwxr-xr-x  1 sparrow95769576  sparrow95769576    0  3 31 12:03 test.sh
+
+// 000으로 변경(권한 완전 제거)
+sparrow95769576@c4r7s7 permission-practice % chmod 000 test.sh 
+sparrow95769576@c4r7s7 permission-practice % ls -la
+total 0
+drwxr-xr-x  3 sparrow95769576  sparrow95769576   96  3 31 12:03 .
+drwxr-xr-x  6 sparrow95769576  sparrow95769576  192  3 31 11:59 ..
+----------  1 sparrow95769576  sparrow95769576    0  3 31 12:03 test.sh
+
+// 권한이 없어 읽기 실패
+sparrow95769576@c4r7s7 permission-practice % cat test.sh 
+cat: test.sh: Permission denied
+
+// 700으로 변경(사용자에게 모든 권한)
+sparrow95769576@c4r7s7 permission-practice % chmod 700 test.sh 
+sparrow95769576@c4r7s7 permission-practice % ls -la
+total 0
+drwxr-xr-x  3 sparrow95769576  sparrow95769576   96  3 31 12:03 .
+drwxr-xr-x  6 sparrow95769576  sparrow95769576  192  3 31 11:59 ..
+-rwx------  1 sparrow95769576  sparrow95769576    0  3 31 12:03 test.sh
+
+// 읽기 성공
+sparrow95769576@c4r7s7 permission-practice % cat test.sh 
+```
+
+폴더 권한
+```
+sparrow95769576@c4r7s7 permission-practice % mkdir test-dir
+sparrow95769576@c4r7s7 permission-practice % ls -la
+total 0
+drwxr-xr-x  4 sparrow95769576  sparrow95769576  128  3 31 12:21 .
+drwxr-xr-x  6 sparrow95769576  sparrow95769576  192  3 31 12:21 ..
+drwxr-xr-x  2 sparrow95769576  sparrow95769576   64  3 31 12:21 test-dir
+-rwx------  1 sparrow95769576  sparrow95769576    0  3 31 12:03 test.sh
+
+// 사용자에게 실행 권한 제거
+sparrow95769576@c4r7s7 permission-practice % chmod 644 test-dir 
+sparrow95769576@c4r7s7 permission-practice % ls -la
+total 0
+drwxr-xr-x  4 sparrow95769576  sparrow95769576  128  3 31 12:21 .
+drwxr-xr-x  6 sparrow95769576  sparrow95769576  192  3 31 12:21 ..
+drw-r--r--  2 sparrow95769576  sparrow95769576   64  3 31 12:21 test-dir
+-rwx------  1 sparrow95769576  sparrow95769576    0  3 31 12:03 test.sh
+
+// 실행 권한이 없어 폴더 진입 실패
+sparrow95769576@c4r7s7 permission-practice % cd test-dir 
+cd: permission denied: test-dir
+
+// 사용자에게 읽기 권한 제거
+sparrow95769576@c4r7s7 permission-practice % chmod 300 test-dir 
+sparrow95769576@c4r7s7 permission-practice % ls -la
+total 0
+drwxr-xr-x  4 sparrow95769576  sparrow95769576  128  3 31 12:21 .
+drwxr-xr-x  6 sparrow95769576  sparrow95769576  192  3 31 12:21 ..
+d-wx------  2 sparrow95769576  sparrow95769576   64  3 31 12:21 test-dir
+-rwx------  1 sparrow95769576  sparrow95769576    0  3 31 12:03 test.sh
+sparrow95769576@c4r7s7 permission-practice % ls -la | grep test-dir 
+d-wx------  2 sparrow95769576  sparrow95769576   64  3 31 12:21 test-dir
+
+// 읽기 실패
+sparrow95769576@c4r7s7 permission-practice % ls test-dir 
+ls: test-dir: Permission denied
+
+// 사용자에게 모든 권한 부여
+sparrow95769576@c4r7s7 permission-practice % chmod 755 test-dir
+
+// 읽기 성공 
+sparrow95769576@c4r7s7 permission-practice % ls test-dir 
+```
+
+
 
 ## 6. Docker 설치/점검
 
