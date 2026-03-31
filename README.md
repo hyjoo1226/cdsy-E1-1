@@ -815,4 +815,62 @@ Password: [PAT 입력]
 ```
 
 
-### 문제 2:
+### 문제 2: Git 동기화 불일치
+
+[문제]
+
+```
+git push origin master
+
+To https://github.com/hyjoo1226/cdsy-E1-1.git
+ ! [rejected]        master -> master (fetch first)
+error: 레퍼런스를 'https://github.com/hyjoo1226/cdsy-E1-1.git'에 푸시하는데 실패했습니다
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+```
+
+[원인 가설]
+
+Github 원격 저장소에서 README를 수정 후 로컬에서 pull받지 않고 작업
+그 결과 로컬에는 없는 새로운 커밋이 존재해 히스토리가 꼬임
+
+
+[확인]
+
+```
+sparrow95769576@c4r7s7 cdsy-E1-1 % git log --graph --oneline --all
+
+*   e9a49ea (HEAD -> master, origin/master, origin/HEAD) Merge: git readme
+|\  
+| * ced7669 Docs: Dockerfile 기반 커스텀 이미지
+* | e204757 Feat: 바인드마운트
+* | ec7af42 Feat: 볼륨영속성
+|/  
+* 93a41d1 Feat: Docker기반 커스텀 이미지 제작
+* 4bb3f34 Docs: 용어 수정
+* cf344f6 Docs: docker attach, exec
+* dbbec75 Docs: Docker 기본 운영 명령
+* 36d2e56 Docs: 트러블슈팅1
+* 59d733e Feat: 권한 실습
+* 4580e3e Docs: 코드블럭 마크다운
+* 8dcd205 Feat: 터미널 조작 로그
+* 72a02cb Docs: 트러블슈팅1 작성
+* 6eb59ec Init: git 레포지토리 생성
+* c9b10c5 Initial commit
+```
+-> 브랜치 갈래가 나뉘어있었음
+
+[해결]
+
+```
+git config pull.rebase false
+
+git pull origin master
+```
+원격의 변경사항을 로컬로 병합(Merge)한 후 다시 push 하여 해결
+-> Merge 방식 사용
+- Merge: 두 브랜치를 병합하는 새 커밋 생성, 히스토리가 유지되나 복잡해질 수 있음
+- Rebase: 히스토리를 재정렬(병합 커밋x, 로컬 커밋을 원격의 최신 커밋 뒤에 붙이기), 선형 히스토리로 가독성이 향상되나 히스토리 손상 가능
