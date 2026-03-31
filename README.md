@@ -19,7 +19,7 @@
 - [v] hello-world 실행
 - [v] Dockerfile 빌드/실행
 - [v] 포트 매핑 접속
-- [ ] 바인드 마운트
+- [v] 바인드 마운트
 - [v] 볼륨 영속성
 - [ ] Git 설정 + GitHub 연동
 
@@ -587,7 +587,28 @@ CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS          PORTS     NA
 
 ## 8. 포트 매핑
 
-## 9. 볼륨 영속성
+## 9. 바인드 마운트 반영
+
+```
+// 마운트 옵션 추가를 위해 기존 컨테이너 종료
+sparrow95769576@c4r7s7 custom-nginx % docker rm -f my-web-container
+my-web-container
+
+// 바인드 마운트 옵션으로 실행
+// -v [호스트 절대경로]:[컨테이너 내부경로]
+sparrow95769576@c4r7s7 custom-nginx % docker run -d \
+  -p 8080:80 \
+  --name my-web-bind \
+  -v $(pwd)/html:/usr/share/nginx/html \
+  my-custom-web:1.0
+
+b54384811dda2d36f9681f9e2f08946bf9f9bef9f920ca537212d2e8db466a76
+
+// 파일 수정
+sparrow95769576@c4r7s7 custom-nginx % echo "<h1>Bind Mount Success\!</h1><p>Modified on Host.</p>" > html/index.html
+```
+
+## 10. 볼륨 영속성
 
 ```
 // 볼륨 생성
