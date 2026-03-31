@@ -778,6 +778,8 @@ branch.master.merge=refs/heads/master
 pull.rebase=false
 ```
 <img width="451" height="43" alt="스크린샷 2026-03-31 오후 4 58 18" src="https://github.com/user-attachments/assets/9d19f30a-64e5-46de-b013-3616c73ccd20" />
+<img src="https://github.com/user-attachments/assets/ea7ea8f5-2fa6-4470-93a8-c59d8d817ba1" />
+
 
 
 
