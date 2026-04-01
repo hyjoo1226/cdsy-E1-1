@@ -570,6 +570,11 @@ exit
 ```
 
 <br>
+터미널: 사용자의 입력을 받고 결과를 화면에 출력
+<br>
+쉘: 입력받은 명령을 해석해 운영체제에 전달
+<br>
+<br>
 
 ```
 // -d(백그라운드 실행) 옵션으로 컨테이너 실행
@@ -722,6 +727,11 @@ b2826d5688ab   my-custom-web:1.0   "/docker-entrypoint.…"   8 seconds ago    U
 ```
 
 <br>
+Localhost:8080번 포트로 요청이 옴
+-> 도커의 80번 포트로 연결해줄게
+-> index.html로 연결해줄게
+
+<br>
 <br>
 
 ## 10. 포트 매핑
@@ -752,7 +762,16 @@ b54384811dda2d36f9681f9e2f08946bf9f9bef9f920ca537212d2e8db466a76
 // 파일 수정
 sparrow95769576@c4r7s7 custom-nginx % echo "<h1>Bind Mount Success\!</h1><p>Modified on Host.</p>" > html/index.html
 ```
+
+<br>
+절대경로: 루트(최상위 경로)부터 목적지까지의 전제 주소
+<br>
+상대경로: 현재 위치를 기준으로 목적지까지 가는 주소
+<br>
+<br>
 <img width="1316" height="1312" alt="스크린샷 2026-03-31 오후 4 15 50" src="https://github.com/user-attachments/assets/7519663d-6e21-437c-b567-589b395fd93e" />
+
+
 
 <br>
 <br>
@@ -760,6 +779,13 @@ sparrow95769576@c4r7s7 custom-nginx % echo "<h1>Bind Mount Success\!</h1><p>Modi
 <br>
 
 ## 12. 볼륨 영속성
+
+볼륨: 도커 엔진이 관리하는 별도의 저장 공간
+<br>
+볼륨영속성: 컨테이너가 사라져도 데이터는 삭제되지 않고 영구히 남는 성질
+- 컨테이너가 일회용으로 사용된 뒤 종료되면 내부 데이터도 함께 증발해버림. 데이터도 같이 사라지는 문제 발생 -> 데이터의 생명주기를 컨테이너와 분리
+
+<br>
 
 ```
 // 볼륨 생성
@@ -819,6 +845,16 @@ Persistence Test: Success
 
 ## 13. Git 설정 및 Github 연동
 
+Git: 로컬에서 소스코드의 변경 이력을 관리하는 소프트웨어
+- 커밋, 병합, 브랜치, 이력 관리 등
+
+<br>
+
+Github: Git으로 관리하는 프로젝트를 인터넷상에 저장할 수 있게 해주는 웹 기반 서비스
+- 원격 저장, 협업, 코드리뷰, CI/CD
+ 
+<br>
+
 ```
 sparrow95769576@c4r7s7 cdsy-E1-1 % git config --list
 
@@ -841,6 +877,15 @@ pull.rebase=false
 <br>
 
 <img width="451" height="43" alt="스크린샷 2026-03-31 오후 4 58 18" src="https://github.com/user-attachments/assets/9d19f30a-64e5-46de-b013-3616c73ccd20" />
+
+<br>
+
+- origin: 원격 저장소
+- fetch: 서버에서 데이터를 가져올 때 사용하는 주소
+- push: 서버에서 데이터를 보낼 때 사용하는 주소
+
+
+
 
 <br>
 <br>
@@ -881,7 +926,7 @@ GitHub는 이제 HTTPS 비밀번호 인증을 지원하지 않아 PAT 또는 SSH
 이러한 환경에서는 매번 SSH 키 생성 및 등록이 번거로움
 
 1. PAT
-- Github 비밀번호 대신 사용하는 임시 비밀번호로, HTTPS 방식에서 인증을 대체
+- Github 비밀번호 대신 사용하는 임시 비밀번호로, HTTPS 방식(암호화 통신에서 아이디/비밀번호를 사용)에서 인증을 대체
 - 동작 원리: Github 서버가 토큰을 검증 -> 권한에 따라 접근 허용
 - 계정에 종속되므로 따로 저장만 해두면 어디서든 사용하기 편함
 - 토큰 유출 위험, 만료 관리 필요
@@ -935,6 +980,7 @@ git push 실패
 [원인 가설]
 
 Github 원격 저장소에 로컬에 없는 커밋이 있는 상태에서 pull받지 않고 작업
+<br>
 그 결과 로컬과 원격 간 커밋 이력이 어긋나면서 히스토리가 분기됨
 
 <br>
