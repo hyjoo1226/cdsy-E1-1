@@ -727,17 +727,18 @@ b2826d5688ab   my-custom-web:1.0   "/docker-entrypoint.…"   8 seconds ago    U
 ```
 
 <br>
-Localhost:8080번 포트로 요청이 옴
--> 도커의 80번 포트로 연결해줄게
--> index.html로 연결해줄게
-
-<br>
-<br>
 
 ## 10. 포트 매핑
 <img width="1215" height="1312" alt="스크린샷 2026-03-31 오후 3 28 30" src="https://github.com/user-attachments/assets/bac1a41f-0442-49a3-a839-3b6fa0dd6fc3" />
 
 <br>
+<br>
+Localhost:8080번 포트로 요청이 옴
+-> 도커의 80번 포트로 연결해줄게
+-> index.html로 연결해줄게
+
+<br>
+포트 매핑이 필요한 이유: 도커 컨테이너는 기본적으로 호스트 OS로부터 독립된 네트워크 환경. 외부에서 직접 접근할 수 없는 사설망과 같아, 외부 사용자가 접속할 수 있도록 통로를 뚫어주는 작업이 필요
 <br>
 <br>
 <br>
